@@ -9,6 +9,23 @@
 int main(void)
 {
     // Your code here
+    int x = 100;
+    //Initialize a clone of this process. It runs the code under this line 
+    int clone = fork();
+    
+    // if clone returns a negative number the clone failed
+    if (clone < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (clone == 0){ // if clone returns 0, the child process has been created
+        printf("Child process: %d\n", x);
+        x = 50;
+        printf("Child process new x: %d\n", x);
+    } else {
+        printf("Parent process: %d\n", x);
+        x = 150;
+        printf("Parent process new x: %d\n", x);
+    }
 
     return 0;
 }
