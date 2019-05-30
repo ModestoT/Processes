@@ -11,6 +11,19 @@
 int main(void)
 {
     // Your code here    
+    int rc = fork();
+    char *args[] = {"/bin/ls", NULL};
+    if (rc < 0){
+        fprintf(stderr, "Fort failed\n");
+        exit(1);
+    } else if (rc == 0){
+        execv(args[0], args);
 
+        fprintf(stderr, "exec failed\n");
+        exit(1);
+    } else {
+        int wc = waitpid(rc, NULL, 0); // Has the parent process wait until the child process is compelted
+        printf("Program ended\n");
+    }
     return 0;
 }
