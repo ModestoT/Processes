@@ -89,7 +89,6 @@ int get_random_amount(void)
 	// !!!! IMPLEMENT ME:
 	int num = (rand() % 1000);
 	// Return a random number between 0 and 999 inclusive using rand()
-	printf("%d\n", num);
 	return num;
 }
 
@@ -160,9 +159,9 @@ int main(int argc, char **argv)
 			// Open the balance file (feel free to call the helper
 			// functions, above).
 			int file = open_balance_file(BALANCE_FILE);
+			flock(file, LOCK_EX);
 			// Read the current balance
 			read_balance(file, &balance);
-			printf("Balance: %d\n", balance);
 			// Try to withdraw money
 			//
 			// Sample messages to print:
@@ -176,6 +175,7 @@ int main(int argc, char **argv)
 			} else {
 				printf("Only have $%d, can't withdraw $%d\n", balance, amount);
 			}
+			flock(file, LOCK_UN);
 			// Close the balance file
 			//^^^^^^^^^^^^^^^^^^^^^^^^^^
 			close_balance_file(file);
