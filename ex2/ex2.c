@@ -9,6 +9,20 @@
 int main(void)
 {
     // Your code here 
+    FILE *f = fopen("text.txt", "r+");
+    int rc = fork();
+
+    if (rc < 0){
+        fprintf(stderr, "fork failed\n");
+        exit(1);
+    } else if (rc == 0){
+        printf("Child process\n");
+        fprintf(f, "File read from child\n");
+    } else{
+        printf("Parent process\n");
+        fprintf(f, "File read from parent\n");
+    }
     
+    fclose(f);
     return 0;
 }
